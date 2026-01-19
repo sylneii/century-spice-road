@@ -14,7 +14,7 @@ func turnManager(players int) func() int {
 	}
 }
 
-func main() {
+func turn() {
 	nextturn := turnManager(4)
 	fmt.Println(nextturn())
 	fmt.Println(nextturn())
