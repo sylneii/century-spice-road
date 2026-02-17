@@ -15,7 +15,7 @@ type Game struct {
 type player struct {
 	username string
 	points   int
-	spices
+	spices   map[spice]int
 }
 
 func (g *Game) AddSpice(s spice, number int) {

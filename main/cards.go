@@ -74,3 +74,6 @@ func (ss *scoringStack) acquire(cardIndex int) error {
 
 	return nil
 }
+
+type tradingCard struct {
+}
