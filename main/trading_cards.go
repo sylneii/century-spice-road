@@ -1,10 +1,6 @@
 package main
 
-import (
-	"log/slog"
-
-	"golang.org/x/text/unicode/rangetable"
-)
+import ()
 
 type spiceCard struct {
 	spices map[spice]int

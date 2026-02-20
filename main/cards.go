@@ -5,18 +5,18 @@ import (
 	"log/slog"
 )
 
-type spice string
+type spice int
 
 const (
-	turmeric spice = "turmeric"
-	saffron  spice = "saffron"
-	cardamom spice = "cardamom"
-	cinnamon spice = "cinnamon"
+	turmeric spice = 1
+	saffron  spice = 2
+	cardamom spice = 3
+	cinnamon spice = 4
 )
 
 type scoringCard struct {
 	points int
-	spices map[string]int
+	spices map[spice]int
 }
 
 type scoringStack struct {
