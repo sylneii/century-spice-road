@@ -8,10 +8,10 @@ import (
 type spice int
 
 const (
-	turmeric spice = 1
-	saffron  spice = 2
-	cardamom spice = 3
-	cinnamon spice = 4
+	turmeric spice = iota + 1
+	saffron
+	cardamom
+	cinnamon
 )
 
 type scoringCard struct {

@@ -1,6 +1,6 @@
 package main
 
-import ()
+import "log/slog"
 
 type spiceCard struct {
 	spices map[spice]int
@@ -13,26 +13,20 @@ func (sc *spiceCard) play(g *Game) {
 }
 
 type upgradeCard struct {
-	upgradeLevels int
+	maxUpgradeLevels       int
+	remainingUpgradeLevels int
 }
 
 func (uc *upgradeCard) play(g *Game) {
-	remainingUpgradeLevels := uc.upgradeLevels
-	for range remainingUpgradeLevels {
 
-	}
 }
 
-func (uc *upgradeCard) upgradeSpice(g *Game, s spice) {
+func (uc *upgradeCard) upgradeSpice(g *Game, s spice, levels int) {
 
-	g.RemoveSpice(s, 1)
-
-	switch s {
-	case turmeric:
-		g.AddSpice(saffron, 1)
-	case saffron:
-		g.AddSpice(cardamom, 1)
-	case cardamom:
-		g.AddSpice(cinnamon, 1)
+	if (s + spice(levels)) > cinnamon {
+		slog.Error("invalid move")
+		return
 	}
+	g.AddSpice(s+spice(levels), 1)
+	g.RemoveSpice(s, 1)
 }
