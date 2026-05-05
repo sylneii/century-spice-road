@@ -43,8 +43,22 @@ func (uc *upgradeCard) upgradeSpice(g *Game, s spice, levels int) {
 }
 
 type exchangeCard struct {
-	baseSpice        spice
-	exchangeSpice    spice
-	ratioNumerator   int64
-	ratioDenominator int64
+	fromSpices map[spice]int
+	toSpices   map[spice]int
+}
+
+func (ec *exchangeCard) play(g *Game) {
+	if !ec.areSpicesAvailable(g) {
+		return
+	}
+
+	for spice := range ec.fromSpices {
+		spice += 1
+	}
+
+}
+
+func (ec *exchangeCard) areSpicesAvailable(g *Game) bool {
+
+	return true
 }
