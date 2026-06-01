@@ -5,7 +5,7 @@ import (
 	"log/slog"
 )
 
-type spice int
+type spice int64
 
 const (
 	turmeric spice = iota + 1
@@ -15,19 +15,19 @@ const (
 )
 
 type scoringCard struct {
-	points int
-	spices map[spice]int
+	points int64
+	spices map[spice]int64
 }
 
 type scoringStack struct {
 	scoringCards  []scoringCard
-	goldCoins     int
-	silverCoins   int
+	goldCoins     int64
+	silverCoins   int64
 	isGoldTaken   bool
 	isSilverTaken bool
 }
 
-func newScoringStack(scoringCards []scoringCard, goldCoins, silverCoins int, isGoldtaken, isSilverTaken bool) *scoringStack {
+func newScoringStack(scoringCards []scoringCard, goldCoins, silverCoins int64, isGoldtaken, isSilverTaken bool) *scoringStack {
 	return &scoringStack{
 		scoringCards:  scoringCards,
 		goldCoins:     goldCoins,   //default 2 * number of players
@@ -37,11 +37,11 @@ func newScoringStack(scoringCards []scoringCard, goldCoins, silverCoins int, isG
 	}
 }
 
-func (ss *scoringStack) acquire(cardIndex int) error {
+func (ss *scoringStack) acquire(cardIndex int64) error {
 	currentCard := ss.scoringCards[cardIndex]
 
 	//invalid moves
-	if cardIndex > len(ss.scoringCards)-1 {
+	if cardIndex > int64(len(ss.scoringCards))-1 {
 		slog.Error("total_cards_less_than_index")
 		return errors.New("Invalid move, pick a card on the display")
 	}
@@ -76,4 +76,7 @@ func (ss *scoringStack) acquire(cardIndex int) error {
 }
 
 type tradingCard struct {
+
 }
+
+type tradingStack

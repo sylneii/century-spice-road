@@ -12,20 +12,23 @@ type Game struct {
 }
 
 type player struct {
-	username string
-	caravan  caravan
+	username      string
+	caravan       caravan
+	spiceCards    []spiceCard
+	upgradeCards  []upgradeCard
+	exchangeCards []exchangeCard
+	scoringCards  []scoringCard
 }
 
 type caravan struct {
-	spices       map[spice]int
-	scoringCards []scoringCard
+	spices map[spice]int64
 }
 
-func (g *Game) AddSpice(s spice, number int) {
+func (g *Game) AddSpice(s spice, number int64) {
 	g.currentPlayer.caravan.spices[s] += number
 }
 
-func (g *Game) RemoveSpice(s spice, number int) error {
+func (g *Game) RemoveSpice(s spice, number int64) error {
 
 	if g.currentPlayer.caravan.spices[s] < number {
 		slog.Error("err.remove_spice.invalid_amount", "reason", "not enough spice", "spice", s)

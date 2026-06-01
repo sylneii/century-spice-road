@@ -3,7 +3,7 @@ package main
 import "log/slog"
 
 type spiceCard struct {
-	spices map[spice]int
+	spices map[spice]int64
 }
 
 func (sc *spiceCard) play(g *Game) {
@@ -43,22 +43,31 @@ func (uc *upgradeCard) upgradeSpice(g *Game, s spice, levels int) {
 }
 
 type exchangeCard struct {
-	fromSpices map[spice]int
-	toSpices   map[spice]int
+	fromSpices map[spice]int64
+	toSpices   map[spice]int64
 }
 
-func (ec *exchangeCard) play(g *Game) {
-	if !ec.areSpicesAvailable(g) {
+func (ec *exchangeCard) play(g *Game, convertTimes int64) {
+	if !ec.areSpicesAvailable(g, convertTimes) {
 		return
 	}
 
-	for spice := range ec.fromSpices {
-		spice += 1
+	for fromSpice, count := range ec.fromSpices {
+		g.currentPlayer.caravan.spices[fromSpice] -= count * convertTimes
+	}
+
+	for toSpice, count := range ec.toSpices {
+		g.currentPlayer.caravan.spices[toSpice] += count * convertTimes
 	}
 
 }
 
-func (ec *exchangeCard) areSpicesAvailable(g *Game) bool {
-
+func (ec *exchangeCard) areSpicesAvailable(g *Game, convertTimes int64) bool {
+	for spice, count := range ec.fromSpices {
+		if g.currentPlayer.caravan.spices[spice] < count*convertTimes {
+			slog.Error("not enough spices")
+			return false
+		}
+	}
 	return true
 }
