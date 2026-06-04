@@ -75,8 +75,36 @@ func (ss *scoringStack) acquire(cardIndex int64) error {
 	return nil
 }
 
-type tradingCard struct {
-
+type tradingCard interface {
+	play(g *Game)
 }
 
-type tradingStack
+type tradingStack struct {
+	tradingCards []tradingCard
+	spiceOnCards []map[spice]int
+}
+
+func newTradingStack(tradingCards []tradingCard) *tradingStack {
+	return &tradingStack{
+		tradingCards: tradingCards,
+		spiceOnCards: []map[spice]int{},
+	}
+}
+
+func (ts *tradingStack) acquire(cardIndex int, putDownSpices []spice) map[spice]int {
+	if cardIndex > 5 {
+		slog.Error("invalid move")
+	}
+	acquiredSpices := ts.spiceOnCards[cardIndex]
+
+	for idx := range ts.tradingCards[:cardIndex] {
+		ts.spiceOnCards[idx][putDownSpices[idx]] += 1
+	}
+	ts.tradingCards = append(ts.tradingCards[:cardIndex], ts.tradingCards[cardIndex+1:]...)
+
+	for idx := range ts.tradingCards[cardIndex:5] {
+		ts.spiceOnCards[idx] = ts.spiceOnCards[idx+1] //check out of bounds for initialization
+	}
+
+	return acquiredSpices
+}
