@@ -76,7 +76,7 @@ func (ss *scoringStack) acquire(cardIndex int64) error {
 }
 
 type tradingCard interface {
-	play(g *Game)
+	play(g *GameState)
 }
 
 type tradingStack struct {

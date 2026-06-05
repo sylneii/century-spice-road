@@ -6,7 +6,7 @@ type spiceCard struct {
 	spices map[spice]int64
 }
 
-func (sc *spiceCard) play(g *Game) {
+func (sc *spiceCard) play(g *GameState) {
 	for spice, number := range sc.spices {
 		g.AddSpice(spice, number)
 	}
@@ -16,7 +16,7 @@ type upgradeCard struct {
 	maxUpgradeLevels int
 }
 
-func (uc *upgradeCard) play(g *Game, baseSpices []spice, levels []int) {
+func (uc *upgradeCard) play(g *GameState, baseSpices []spice, levels []int) {
 
 	var totalLevels int
 	for _, level := range levels {
@@ -32,7 +32,7 @@ func (uc *upgradeCard) play(g *Game, baseSpices []spice, levels []int) {
 	}
 }
 
-func (uc *upgradeCard) upgradeSpice(g *Game, s spice, levels int) {
+func (uc *upgradeCard) upgradeSpice(g *GameState, s spice, levels int) {
 
 	if (s + spice(levels)) > cinnamon {
 		slog.Error("spice value greater than cinnamon")
@@ -47,7 +47,7 @@ type exchangeCard struct {
 	toSpices   map[spice]int64
 }
 
-func (ec *exchangeCard) play(g *Game, convertTimes int64) {
+func (ec *exchangeCard) play(g *GameState, convertTimes int64) {
 	if !ec.areSpicesAvailable(g, convertTimes) {
 		return
 	}
@@ -62,7 +62,7 @@ func (ec *exchangeCard) play(g *Game, convertTimes int64) {
 
 }
 
-func (ec *exchangeCard) areSpicesAvailable(g *Game, convertTimes int64) bool {
+func (ec *exchangeCard) areSpicesAvailable(g *GameState, convertTimes int64) bool {
 	for spice, count := range ec.fromSpices {
 		if g.currentPlayer.caravan.spices[spice] < count*convertTimes {
 			slog.Error("not enough spices")
