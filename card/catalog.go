@@ -1,6 +1,5 @@
 package card
 
-
 type Spice int64
 
 const (
@@ -13,26 +12,22 @@ const (
 type cardType string
 
 const (
-	spiceCard cardType = "spice_card"
-	upgradeCard cardType = "upgrade_card"
-	exchangeCard cardType = "exchange_card"
+	SpiceCard    cardType = "spice_card"
+	UpgradeCard  cardType = "upgrade_card"
+	ExchangeCard cardType = "exchange_card"
 )
 
 type TradingCard struct {
-	id string
-	cardType cardType
-	getSpices map[Spice]int64
-	upgradeCount int64
-	fromSpices map[Spice]int64
-	toSpices map[Spice]int64
+	id           string
+	CardType     cardType
+	GetSpices    map[Spice]int64
+	UpgradeCount int64
+	FromSpices   map[Spice]int64
+	ToSpices     map[Spice]int64
 }
 
 type ScoringCard struct {
-	id string
+	id        string
 	spiceCost map[Spice]int64
-	points int64
+	points    int64
 }
-
-
-
-

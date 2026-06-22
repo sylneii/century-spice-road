@@ -1,4 +1,4 @@
-package handlers
+package game
 
 import (
 	"sync"
@@ -10,9 +10,9 @@ type GameState struct {
 	players       []player
 	currentPlayer player
 	round         int
-	tradingDeck tradingStack
-	scoringDeck scoringStack
-	mu sync.Mutex
+	tradingDeck   tradingStack
+	scoringDeck   scoringStack
+	mu            sync.Mutex
 }
 
 type player struct {
@@ -26,7 +26,7 @@ type player struct {
 
 type caravan struct {
 	spices map[card.Spice]int64
-	limit int64
+	limit  int64
 }
 
 type tradingStack struct {
@@ -40,4 +40,8 @@ type scoringStack struct {
 	silverCoins   int64
 	isGoldTaken   bool
 	isSilverTaken bool
+}
+
+func (c *caravan) IsFull() {
+
 }

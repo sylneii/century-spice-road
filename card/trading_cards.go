@@ -10,20 +10,19 @@ func GetTradingCard(cardId string) TradingCard {
 
 var tradingCards = map[string]TradingCard{
 	"TC01": {
-		id: "TC01",
-		cardType: spiceCard,
-		getSpices: map[Spice]int64{turmeric: 2},
+		id:        "TC01",
+		CardType:  SpiceCard,
+		GetSpices: map[Spice]int64{turmeric: 2},
 	},
 	"TC02": {
-		id: "TC02",
-		cardType: upgradeCard,
-		upgradeCount: 2,
+		id:           "TC02",
+		CardType:     UpgradeCard,
+		UpgradeCount: 2,
 	},
 	"TC03": {
-		id: "TC03",
-		cardType: exchangeCard,
-		fromSpices: map[Spice]int64{turmeric: 2},
-		toSpices: map[Spice]int64{saffron: 1},
+		id:         "TC03",
+		CardType:   ExchangeCard,
+		FromSpices: map[Spice]int64{turmeric: 2},
+		ToSpices:   map[Spice]int64{saffron: 1},
 	},
 }
-
