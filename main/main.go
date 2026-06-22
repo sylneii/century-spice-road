@@ -9,6 +9,7 @@ func homePageHandler(w http.ResponseWriter, req *http.Request) {
 
 }
 
+
 type NewGame struct {
 	Username string `json:"username"`
 }

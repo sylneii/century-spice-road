@@ -3,6 +3,8 @@ package main
 import (
 	"errors"
 	"log/slog"
+
+	"github.com/sylneii/century-spice-road/card"
 )
 
 type spice int64
@@ -14,13 +16,8 @@ const (
 	cinnamon
 )
 
-type scoringCard struct {
-	points int64
-	spices map[spice]int64
-}
-
 type scoringStack struct {
-	scoringCards  []scoringCard
+	scoringCards  []card.ScoringCard
 	goldCoins     int64
 	silverCoins   int64
 	isGoldTaken   bool
@@ -73,10 +70,6 @@ func (ss *scoringStack) acquire(cardIndex int64) error {
 	}
 
 	return nil
-}
-
-type tradingCard interface {
-	play(g *GameState)
 }
 
 type tradingStack struct {
