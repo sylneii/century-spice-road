@@ -18,12 +18,13 @@ const (
 )
 
 type TradingCard struct {
-	id           string
-	CardType     cardType
-	GetSpices    map[Spice]int64
-	UpgradeCount int64
-	FromSpices   map[Spice]int64
-	ToSpices     map[Spice]int64
+	id                     string
+	CardType               cardType
+	Spices                 map[Spice]int64
+	MaxUpgradeLevels       int64
+	RemainingUpgradeLevels int64
+	FromSpices             map[Spice]int64
+	ToSpices               map[Spice]int64
 }
 
 type ScoringCard struct {

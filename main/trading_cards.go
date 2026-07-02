@@ -6,12 +6,6 @@ type spiceCard struct {
 	spices map[spice]int64
 }
 
-func (sc *spiceCard) play(g *GameState) {
-	for spice, number := range sc.spices {
-		g.AddSpice(spice, number)
-	}
-}
-
 type upgradeCard struct {
 	maxUpgradeLevels int
 }

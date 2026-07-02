@@ -3,12 +3,17 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+
+	"github.com/sylneii/century-spice-road/game"
 )
 
 func homePageHandler(w http.ResponseWriter, req *http.Request) {
 
 }
 
+type CenturyServer struct {
+	gameState *game.GameState
+}
 
 type NewGame struct {
 	Username string `json:"username"`
@@ -24,12 +29,11 @@ func NewGameHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func ActionHandler(w http.ResponseWriter, req *http.Request) {
-
 }
 
 func main() {
 
-	ruleEngine := NewRuleEngine()
+	// ruleEngine := NewRuleEngine()
 
 	mux := http.NewServeMux()
 

@@ -1,59 +1,41 @@
 package game
 
 import (
-	"fmt"
-	"log/slog"
-
 	"github.com/sylneii/century-spice-road/card"
 )
 
-type ActionType string
+type actionType string
 
-const  (
-	playTradingCard ActionType = "play_card"
-	acquireTradingCard ActionType = "acquire_trading_card"
-	acquireScoringCard ActionType = "acquire_scoring_card"
-	restAction = "rest_action"
+const (
+	playTradingCard    actionType = "play_card"
+	acquireTradingCard actionType = "acquire_trading_card"
+	acquireScoringCard actionType = "acquire_scoring_card"
+	restAction         actionType = "rest_action"
+
+	discardSpices actionType = "discard_spices"
+	endTurn       actionType = "end_turn"
 )
 
-
-
-func (g *GameState) addSpice(s card.Spice, number int64) {
-	g.currentPlayer.caravan.spices[s] += number
-}
-
-func (g *GameState) removeSpice(s card.Spice, number int64) error {
-
-	if g.currentPlayer.caravan.spices[s] < number {
-		slog.Error("err.remove_spice.invalid_amount", "reason", "not enough spice", "spice", s)
-		return fmt.Errorf("invalid move: not enough %q", s) //formatverb check
-	}
-	g.currentPlayer.caravan.spices[s] -= number
-	return nil
-}
-
-func (g *GameState) discardExtraSpices(discardSpices []card.Spice) {
-	for _, spice := range discardSpices {
-		g.removeSpice(spice, 1)
-	}
-}
-
 type actionDetails struct {
-	cardID string
-	position int64
-	spicesPlaced []card.Spice
+	actionType    string
+	cardID        string
+	position      int64
+	spicesPlaced  []card.Spice
+	discardSpices []card.Spice
 }
 
 func (g *GameState) ApplyAction(actionType string, actionDetails actionDetails) error {
-	switch actionType {
+	switch actionDetails.actionType {
 	case string(playTradingCard):
-		return nil
-	case string(acquireTradingCard):
-		return nil
-	case string(acquireScoringCard):
-		return nil
-	case string(restAction):
-		return nil
+		return g.playCard(actionDetails.cardID)
+	// case string(acquireTradingCard):
+	// return g.acquireTradingCard(actionDetails.position)
+	// case string(acquireScoringCard):
+	// 	return GameState{}, nil
+	// case string(restAction):
+	// 	return GameState{}, nil
+	case string(discardSpices):
+		return g.discardExtraSpices(actionDetails.discardSpices)
 	default:
 		return nil
 	}
