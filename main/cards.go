@@ -24,7 +24,7 @@ type scoringStack struct {
 	isSilverTaken bool
 }
 
-func newScoringStack(scoringCards []scoringCard, goldCoins, silverCoins int64, isGoldtaken, isSilverTaken bool) *scoringStack {
+func newScoringStack(scoringCards []card.ScoringCard, goldCoins, silverCoins int64, isGoldtaken, isSilverTaken bool) *scoringStack {
 	return &scoringStack{
 		scoringCards:  scoringCards,
 		goldCoins:     goldCoins,   //default 2 * number of players
@@ -73,11 +73,11 @@ func (ss *scoringStack) acquire(cardIndex int64) error {
 }
 
 type tradingStack struct {
-	tradingCards []tradingCard
+	tradingCards []card.TradingCard
 	spiceOnCards []map[spice]int
 }
 
-func newTradingStack(tradingCards []tradingCard) *tradingStack {
+func newTradingStack(tradingCards []card.TradingCard) *tradingStack {
 	return &tradingStack{
 		tradingCards: tradingCards,
 		spiceOnCards: []map[spice]int{},

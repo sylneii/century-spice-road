@@ -19,7 +19,9 @@ type GameState struct {
 type player struct {
 	username     string
 	caravan      caravan
-	tradingCards []card.TradingCard
+	currentCard  card.TradingCard
+	usedCards    map[string]card.TradingCard
+	tradingCards map[string]card.TradingCard
 	scoringCards []card.ScoringCard
 	goldCoins    int64
 	silverCoins  int64
@@ -50,7 +52,8 @@ type pendingAction interface {
 	isPending()
 }
 
-type pendingActionDiscard struct{}
+type pendingActionDiscard struct {
+}
 
 type pendingActionUpgrade struct {
 	remainingLevels int64
@@ -60,6 +63,6 @@ type pendingActionExchange struct {
 	upgradesDone int64
 }
 
-func (p *pendingActionDiscard) isPending()  {}
-func (p *pendingActionUpgrade) isPending()  {}
-func (p *pendingActionExchange) isPending() {}
+func (p pendingActionDiscard) isPending()  {}
+func (p pendingActionUpgrade) isPending()  {}
+func (p pendingActionExchange) isPending() {}

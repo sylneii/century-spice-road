@@ -19,5 +19,7 @@ func (g *GameState) discardExtraSpices(discardSpices []card.Spice) error {
 		g.removeSpice(spice, number)
 	}
 
+	g.restCard(cardId)
+
 	return nil
 }

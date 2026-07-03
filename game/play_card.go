@@ -1,13 +1,17 @@
 package game
 
-import "github.com/sylneii/century-spice-road/card"
+import (
+	"fmt"
+
+	"github.com/sylneii/century-spice-road/card"
+)
 
 func (g *GameState) playCard(cardId string) error {
-	playedCard := card.GetTradingCard(cardId)
+	cardType := card.GetTradingCardType(cardId)
 
-	switch playedCard.CardType {
+	switch cardType {
 	case card.SpiceCard:
-		return g.playSpiceCard(playedCard)
+		return g.playSpiceCard(cardId)
 		// case card.UpgradeCard:
 		// 	return playUpgradeCard(g)
 		// case card.ExchangeCard:
@@ -17,14 +21,23 @@ func (g *GameState) playCard(cardId string) error {
 	}
 }
 
-func (g *GameState) playSpiceCard(card card.TradingCard) error {
+func (g *GameState) playSpiceCard(cardId string) error {
+
+	card, ok := g.getCurrentPlayer().tradingCards[cardId]
+	if !ok {
+		return fmt.Errorf("card not in hand")
+	}
+
 	for spice, number := range card.Spices {
 		g.addSpice(spice, number)
 	}
+
 	if g.getCurrentPlayer().caravan.isLimitExceeded() {
-		g.pendingAction = &pendingActionDiscard{}
+		g.getCurrentPlayer().currentCard = card
+		g.pendingAction = pendingActionDiscard{}
 	} else {
-		g.phase = phaseEndTurn
+		g.restCard(cardId)
+		g.endTurn()
 	}
 
 	return nil
@@ -32,4 +45,5 @@ func (g *GameState) playSpiceCard(card card.TradingCard) error {
 
 func playUpgradeCard(g *GameState, card card.TradingCard) error {
 
+	return nil
 }

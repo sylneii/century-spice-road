@@ -1,6 +1,9 @@
 package game
 
 import (
+	"fmt"
+
+	defaultcheck "github.com/gogo/protobuf/test/defaultconflict"
 	"github.com/sylneii/century-spice-road/card"
 )
 
@@ -17,16 +20,29 @@ const (
 )
 
 type actionDetails struct {
-	actionType    string
+	ActionType    actionType `json:"action_type"`
 	cardID        string
 	position      int64
 	spicesPlaced  []card.Spice
 	discardSpices []card.Spice
 }
 
-func (g *GameState) ApplyAction(actionType string, actionDetails actionDetails) error {
-	switch actionDetails.actionType {
-	case string(playTradingCard):
+func (g *GameState) ApplyAction(actionType actionType, actionDetails actionDetails) error {
+
+	if g.pendingAction != nil {
+		switch g.pendingAction.(type) {
+		case pendingActionDiscard:
+			if actionType != discardSpices {
+				return fmt.Errorf("wrong action")
+			}
+			return g.discardExtraSpices(actionDetails.discardSpices)
+		default:
+
+		}
+	}
+
+	switch actionDetails.ActionType {
+	case playTradingCard:
 		return g.playCard(actionDetails.cardID)
 	// case string(acquireTradingCard):
 	// return g.acquireTradingCard(actionDetails.position)
@@ -34,8 +50,6 @@ func (g *GameState) ApplyAction(actionType string, actionDetails actionDetails) 
 	// 	return GameState{}, nil
 	// case string(restAction):
 	// 	return GameState{}, nil
-	case string(discardSpices):
-		return g.discardExtraSpices(actionDetails.discardSpices)
 	default:
 		return nil
 	}

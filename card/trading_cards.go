@@ -1,11 +1,11 @@
 package card
 
-func lookupTradingCard(cardId string) TradingCard {
-	return tradingCards[cardId]
+func lookupTradingCardType(cardId string) cardType {
+	return tradingCards[cardId].CardType
 }
 
-func GetTradingCard(cardId string) TradingCard {
-	return lookupTradingCard(cardId)
+func GetTradingCardType(cardId string) cardType {
+	return lookupTradingCardType(cardId)
 }
 
 var tradingCards = map[string]TradingCard{
