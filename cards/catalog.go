@@ -1,4 +1,4 @@
-package card
+package cards
 
 type Spice int64
 
@@ -6,7 +6,7 @@ const (
 	turmeric Spice = iota + 1
 	saffron
 	cardamom
-	cinnamon
+	Cinnamon
 )
 
 type cardType string
@@ -18,13 +18,12 @@ const (
 )
 
 type TradingCard struct {
-	id                     string
-	CardType               cardType
-	Spices                 map[Spice]int64
-	MaxUpgradeLevels       int64
-	RemainingUpgradeLevels int64
-	FromSpices             map[Spice]int64
-	ToSpices               map[Spice]int64
+	Id               string
+	CardType         cardType
+	Spices           map[Spice]int64
+	MaxUpgradeLevels int64
+	FromSpices       map[Spice]int64
+	ToSpices         map[Spice]int64
 }
 
 type ScoringCard struct {

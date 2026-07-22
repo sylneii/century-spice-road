@@ -3,7 +3,7 @@ package game
 import (
 	"sync"
 
-	"github.com/sylneii/century-spice-road/card"
+	"github.com/sylneii/century-spice-road/cards"
 )
 
 type GameState struct {
@@ -19,16 +19,16 @@ type GameState struct {
 type player struct {
 	username     string
 	caravan      caravan
-	currentCard  card.TradingCard
-	usedCards    map[string]card.TradingCard
-	tradingCards map[string]card.TradingCard
-	scoringCards []card.ScoringCard
+	currentCard  cards.TradingCard
+	usedCards    map[string]cards.TradingCard
+	tradingCards map[string]cards.TradingCard
+	scoringCards []cards.ScoringCard
 	goldCoins    int64
 	silverCoins  int64
 }
 
 type caravan struct {
-	spices map[card.Spice]int64
+	spices map[cards.Spice]int64
 }
 
 const (
@@ -36,12 +36,12 @@ const (
 )
 
 type tradingStack struct {
-	tradingCards []card.TradingCard
-	spiceOnCards []map[card.Spice]int
+	tradingCards []cards.TradingCard
+	spiceOnCards []map[cards.Spice]int
 }
 
 type scoringStack struct {
-	scoringCards  []card.ScoringCard
+	scoringCards  []cards.ScoringCard
 	goldCoins     int64
 	silverCoins   int64
 	isGoldTaken   bool

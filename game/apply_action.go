@@ -3,8 +3,7 @@ package game
 import (
 	"fmt"
 
-	defaultcheck "github.com/gogo/protobuf/test/defaultconflict"
-	"github.com/sylneii/century-spice-road/card"
+	"github.com/sylneii/century-spice-road/cards"
 )
 
 type actionType string
@@ -19,12 +18,18 @@ const (
 	endTurn       actionType = "end_turn"
 )
 
+type upgradeAction struct {
+	spice  cards.Spice
+	levels int64
+}
+
 type actionDetails struct {
 	ActionType    actionType `json:"action_type"`
 	cardID        string
 	position      int64
-	spicesPlaced  []card.Spice
-	discardSpices []card.Spice
+	upgradeAction upgradeAction
+	spicesPlaced  []cards.Spice
+	discardSpices []cards.Spice
 }
 
 func (g *GameState) ApplyAction(actionType actionType, actionDetails actionDetails) error {
@@ -43,7 +48,7 @@ func (g *GameState) ApplyAction(actionType actionType, actionDetails actionDetai
 
 	switch actionDetails.ActionType {
 	case playTradingCard:
-		return g.playCard(actionDetails.cardID)
+		return g.playCard(actionDetails)
 	// case string(acquireTradingCard):
 	// return g.acquireTradingCard(actionDetails.position)
 	// case string(acquireScoringCard):

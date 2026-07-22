@@ -1,9 +1,13 @@
 package game
 
-import ()
+import "github.com/sylneii/century-spice-road/cards"
 
 func (g *GameState) getCurrentPlayer() *player {
 	return g.players[g.currentPlayerIndex]
+}
+
+func (g *GameState) getCurrentPlayerSpices() map[cards.Spice]int64 {
+	return g.getCurrentPlayer().caravan.spices
 }
 
 func (g *GameState) endTurn() {

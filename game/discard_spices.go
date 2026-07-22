@@ -3,7 +3,7 @@ package game
 import (
 	"fmt"
 
-	"github.com/sylneii/century-spice-road/card"
+	"github.com/sylneii/century-spice-road/cards"
 )
 
 func (g *GameState) discardExtraSpices(discardSpices []card.Spice) error {
@@ -19,7 +19,8 @@ func (g *GameState) discardExtraSpices(discardSpices []card.Spice) error {
 		g.removeSpice(spice, number)
 	}
 
-	g.restCard(cardId)
+	g.restCard(g.getCurrentPlayer().currentCard.Id)
+	g.getCurrentPlayer().currentCard = card.TradingCard{}
 
 	return nil
 }
